@@ -16,14 +16,18 @@ import zipy_elements.Elements;
 public class Tests_main {
 	
 	static WebDriver driver;
+	boolean errorCaught;
 
 	@Before 
 	public void closeEnteringPopUp() {	
+		
+		errorCaught = false;
 		
 		System.setProperty("webdriver.chrome.driver","C:/Users/Sveta/eclipse/java-2019-09/chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS); 
 		
+		//enter site
 		driver.get(Elements.Zipy_site_heb);
 		
 		//close the pop-up window if exist
@@ -31,13 +35,7 @@ public class Tests_main {
 			driver.findElement(By.xpath(Elements.Popup_welcome_close)).click();
 		}
 		
-		//press login button		
-		JavascriptExecutor ex=(JavascriptExecutor)driver;
-		ex.executeScript("arguments[0].click()", driver.findElement(By.xpath(Elements.Login_button)));
-				
-		//enter login+password
-		driver.findElement(By.id("i_signin-email")).sendKeys(Elements.Username, Keys.TAB, Elements.Password, Keys.ENTER);
-				
+		
 	}
 	
 	@After	
